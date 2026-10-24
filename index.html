@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spieleblock</title>
+  <meta name="description" content="Digitaler Spieleblock zum Punkte zählen – direkt im Browser gespeichert.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="wrap">
+    <header class="topbar">
+      <h1>🎲 Spieleblock</h1>
+    </header>
+
+    <p class="muted">Punkte zählen ohne Zettel und Stift. Alle Spielstände werden nur lokal in diesem Browser gespeichert.</p>
+
+    <section class="games">
+      <a class="game-tile" href="wizard/">
+        <div class="icon">🧙</div>
+        <h2>Wizard</h2>
+        <div class="muted small">Stiche ansagen, Stiche machen – 3 bis 6 Spieler.</div>
+        <span class="badge hidden" id="wizard-badge"></span>
+      </a>
+      <div class="game-tile disabled">
+        <div class="icon">➕</div>
+        <h2>Weitere Spiele</h2>
+        <div class="muted small">Folgen bald.</div>
+      </div>
+    </section>
+
+    <footer>Daten bleiben auf diesem Gerät.</footer>
+  </main>
+
+  <script>
+    // Zeigt auf der Kachel an, ob ein Wizard-Spiel läuft.
+    try {
+      var data = JSON.parse(localStorage.getItem('spieleblock.wizard.v1'));
+      var running = Object.keys((data && data.games) || {})
+        .map(function (id) { return data.games[id]; })
+        .filter(function (g) { return g.rounds.length < g.totalRounds; })
+        .sort(function (a, b) { return b.updated - a.updated; });
+      var game = running[0];
+      if (game) {
+        var badge = document.getElementById('wizard-badge');
+        badge.textContent = 'Laufendes Spiel · Runde ' + (game.rounds.length + 1) + '/' + game.totalRounds;
+        badge.classList.remove('hidden');
+      }
+    } catch (e) {}
+  </script>
+</body>
+</html>

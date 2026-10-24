@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wizard · Spieleblock</title>
+  <meta name="description" content="Wizard-Spielblock: Ansagen und Stiche eintragen, Punkte werden automatisch berechnet.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧙</text></svg>">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <main class="wrap">
+    <header class="topbar">
+      <a class="back" href="../" id="back-link">← Spieleblock</a>
+      <h1>🧙 Wizard</h1>
+    </header>
+
+    <!-- Neues Spiel / gespeicherte Spiele -->
+    <section id="view-setup" class="hidden">
+      <div class="card">
+        <h2>Neues Spiel</h2>
+        <div class="field">
+          <label>Spieler (3–6)</label>
+          <div id="player-inputs"></div>
+          <button type="button" id="add-player">+ Spieler hinzufügen</button>
+        </div>
+        <div class="field">
+          <label for="first-dealer">Wer gibt zuerst?</label>
+          <select id="first-dealer"></select>
+        </div>
+        <label class="check">
+          <input type="checkbox" id="opt-no-even">
+          <span>Ansagen dürfen nicht aufgehen<br><span class="muted small">Die Summe aller Ansagen darf nicht der Anzahl der Stiche entsprechen (gilt für den Geber).</span></span>
+        </label>
+        <button type="button" class="btn-primary btn-block" id="start-game">Spiel starten</button>
+      </div>
+
+      <div class="card hidden" id="saved-card">
+        <h2>Gespeicherte Spiele</h2>
+        <ul class="saved" id="saved-list"></ul>
+      </div>
+
+      <div class="card small muted">
+        <strong>Punkte:</strong> Ansage getroffen = 20 Punkte + 10 pro Stich.
+        Daneben = −10 Punkte pro Stich Abweichung.
+      </div>
+    </section>
+
+    <!-- Laufendes Spiel -->
+    <section id="view-game" class="hidden">
+      <div class="card" id="round-card"></div>
+      <div class="card hidden" id="result-card"></div>
+      <div class="card">
+        <h2>Punkte</h2>
+        <div class="table-wrap">
+          <table class="scores" id="score-table"></table>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button type="button" id="undo-round">↶ Letzte Runde bearbeiten</button>
+        <button type="button" id="to-overview">Übersicht</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast hidden" id="toast" role="status"></div>
+
+  <script src="wizard.js"></script>
+</body>
+</html>
